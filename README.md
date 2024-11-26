@@ -1,301 +1,207 @@
-# React 컴포넌트 만들기
+# React 변수 알아보기
 
-- html 즉 jsx 작성하기
+## 1. JSX 변수 활용
 
-## 1. 컴포넌트에 css 추가하기
+- /src/components/Pop.jsx 생성
+  - rafce (React Arrow Function Component Export)
 
-- css 폴더에 css 파일들을 모아서 사용하는 경우가 많음
-- 개인적 추천
-  - 파일이 있는 곳에 css도 같이 두기를 권장함
-  - `css 규칙은 권장하기로 컴포넌트명과 동일한 css 권장`
-
-## 2. css 추가 및 적용하는 법
-
-### 2.1. css 라이브러리 활용
-
-- `index.html`에 `link` 권장함
-
-- `reset.css`
-
-  - https://meyerweb.com/eric/tools/css/reset/
-  - 나중에 `npm install` 활용
-
-- `normalize.css`
-
-  - https://necolas.github.io/normalize.css/
-  - 나중에 `npm install` 활용
-
-- `폰트 어썸`
-
-  - https://cdnjs.com/libraries/font-awesome
-  - 아이콘 글꼴 - 나중에 `npm install` 활용
-
-- `구글 글꼴`
-  - https://fonts.google.com
-  - 나중에 `index.css에 작성` 가능
-
-```html
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React 학습</title>
-    <!-- reset.css -->
-    <link
-      rel="stylesheet"
-      href="https://meyerweb.com/eric/tools/css/reset/reset.css"
-    />
-    <!-- normalize -->
-    <link
-      rel="stylesheet"
-      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
-    />
-    <!-- fontawsome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-    />
-    <!-- google 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+```
+1. 컴포넌트는 html을 배치한다
+2. 컴포넌트는 css를 배치한다
+3. 컴포넌트에 js를 활용한다
 ```
 
-### 2.2. 전체 css에 공통 적용이 필요한 경우
+### 1.1. JSX에 변수 출력 하는법
 
-- `/src/index.css`를 활용하시길 권장함
-
-```css
-:root {
-  --primary-color: #000000;
-  --secondary-color: #0000ff;
-  --font-size-base: 16px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-a {
-  text-decoration: none;
-  color: #000000;
-}
-ul,
-li {
-  list-style: none;
-}
-html {
-  font-size: 16px;
-}
-body {
-  font-size: var(--font-size-base);
-  color: var(--primary-color);
-}
-/* 웹서비스 개발시 권장함.(개인적으로) */
-html,
-body,
-:root {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-```
-
-### 2.3. module.css 방식
-
-- 컴포넌트라면 분명 `협업을 할 것`이라는 가정함
-- 협업시에 css의 우선권 문제가 발생하여 원활한 css가 어려움
-- 최소 `컴포넌트명.module.css`를 준수하기를 권장함
-- `/src/components/footer.module.css`
-
-```css
-.layout {
-  background-color: brown;
-}
-.layout a {
-  color: #ffffff;
-}
-```
+- 보간법 : {중괄호 표기법}
 
 ```jsx
-import styles from "./footer.module.css";
-const Footer = () => {
+const Pop = () => {
+  const title = "팝업제목";
+  const data = "팝업내용";
   return (
-    <footer>
-      <div className={styles.layout}>
-        <a href="#">로고</a>
-        <div>카피라이터</div>
-        <div>SNS</div>
-      </div>
-    </footer>
+    <div>
+      <h1>{title}</h1>
+      <p>{data}</p>
+    </div>
   );
 };
 
-export default Footer;
+export default Pop;
 ```
 
-### 2.4. SCSS 방식
+### 1.2. JSX에 보간법을 이용한 css출력
 
-- 소스 관리가 편함
-- css를 체계적으로 구성
-- css에 프로그래밍적 요소로 작성 가능(변수, mixin:함수..)
+#### 1.2.1. 인라인 방식
 
-#### 2.4.1. 환경구성
+- 복잡해요
+- style={ { 속성명: 속성값, 속성명: 속성값.. } }
 
-- `npm i -D sass`
-- `Live Sass Compiler` 플러그인 설치
+```jsx
+const Pop = () => {
+  const title = "팝업제목";
+  const data = "팝업내용";
+  return (
+    <div>
+      <h1 style={{ color: "red" }}>{title}</h1>
+      <p>{data}</p>
+    </div>
+  );
+};
+export default Pop;
+```
 
-#### 2.4.2. 기본 문법의 이해
+#### 1.2.2. 객체 리터럴 오브젝트 방식
 
-- `/src/scss` 폴더 생성 권장
-- `/src/scss/test.scss` 파일 생성시 확장자 확인 필요
+```jsx
+const Pop = () => {
+  const title = "팝업제목";
+  const data = "팝업내용";
+  // CSS에 역할을 하는 객체 리터럴은 변수명을 파스칼로 합니다.(관례)
+  const TitleStyle = { color: "red", fontSize: "12px" };
+  return (
+    <div>
+      <h1 style={TitleStyle}>{title}</h1>
+      <p>{data}</p>
+    </div>
+  );
+};
+export default Pop;
+```
 
-#### 2.4.3. 중첩 문법(Nesting)
+#### 1.2.3. 객체 리터럴 오브젝트는 가능하면 .js에 export형식 권장
 
-```scss
-.wrap {
+- /src/components/pop.js(확장자 조심)
+
+```js
+export const TitleStyle = { color: "red", fontSize: "12px" };
+export const BodyStyle = { color: "green", fontSize: "11px" };
+```
+
+```jsx
+import { BodyStyle, TitleStyle } from "./pop";
+
+const Pop = () => {
+  const title = "팝업제목";
+  const data = "팝업내용";
+
+  return (
+    <div>
+      <h1 style={TitleStyle}>{title}</h1>
+      <p style={BodyStyle}>{data}</p>
+    </div>
+  );
+};
+export default Pop;
+```
+
+## 2. CSS-in-JS
+
+- Styled Component
+- Emotion(유행함)
+
+### 2.1. Emtion 환경 구성
+
+- `npm i @emotion/react @emotion/styled`
+- `vscode-styled-components` 플러그인 설치
+
+### 2.2. 장점
+
+- 태그만 보아도 어떤 내용을 보여주는지 알 수 있다
+- 별도의 컴포넌트.jsx 안 만들어도 된다
+- CSS도 함께 작성할 수 있다
+
+```jsx
+import styled from "@emotion/styled";
+import { BodyStyle, TitleStyle } from "./pop-style";
+
+const Pop = () => {
+  const title = "팝업제목";
+  const data = "팝업내용";
+  const PopupTitle = styled.h1`
+    color: hotpink;
+    font-size: 20px;
+    text-align: center;
+  `;
+  const SlideDiv = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+  `;
+  const BannerDiv = styled.div``;
+  const NoticeDiv = styled.div``;
+
+  return (
+    <div>
+      <PopupTitle style={TitleStyle}>{title}</PopupTitle>
+      <p style={BodyStyle}>{data}</p>
+      <SlideDiv>슬라이드</SlideDiv>
+      <BannerDiv>배너</BannerDiv>
+      <NoticeDiv>공지사항</NoticeDiv>
+    </div>
+  );
+};
+export default Pop;
+```
+
+### 2.3. Props 전달 가능
+
+- Emotion에서 props가 무엇인지 이해 후
+- JSX에서도 그대로 이해하면 됨
+- 장점은 응용범위가 넓고, 재사용을 할 수 있다
+- JSX 컴포넌트처럼 CSS 컴포넌트입니다
+- 일반적으로 별도 js 파일로 모아서 팀이 활용한다
+
+#### 2.3.1. 기본형
+
+```js
+const SlideDiv = styled.div`
   position: relative;
-  .notice {
-    width: 500px;
-    ul {
-      li {
-        background-color: blue;
-      }
-    }
-  }
-  .slide {
-    width: 200px;
-  }
-  .banner {
-    width: 300px;
-  }
-}
-```
-
-#### 2.4.4. 변수
-
-```scss
-$width-screen: 1680px;
-$pc-screen: 1024px;
-$mb-screen: 760px;
-$color-bg: blue;
-
-.wrap {
-  position: relative;
-  width: $width-screen;
-  .notice {
-    width: $pc-screen;
-    ul {
-      li {
-        background-color: $color-bg;
-      }
-    }
-  }
-  .slide {
-    width: $mb-screen;
-  }
-  .banner {
-    width: $mb-screen;
-  }
-}
-```
-
-#### 2.4.5. 변수는 별도 파일로 관리하자
-
-- `_`로 파일명을 시작하면 css가 생성안됨
-- `_val.scss`
-
-```scss
-$width-screen: 2000px;
-$pc-screen: 1024px;
-$mb-screen: 760px;
-$color-bg: yellow;
-```
-
-- 변수 사용시 @import "파일명"을 사용함
-
-```scss
-@import "val";
-.wrap {
-  position: relative;
-  width: $width-screen;
-  .notice {
-    width: $pc-screen;
-    ul {
-      li {
-        background-color: $color-bg;
-      }
-    }
-  }
-  .slide {
-    width: $mb-screen;
-  }
-  .banner {
-    width: $mb-screen;
-  }
-}
-```
-
-#### 2.4.6. Mixins 사용하기(함수)
-
-- 파일명에 `_`를 활용하자(`_mixins.scss`)
-
-```scss
-@mixin flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+  background-color: green;
+`;
 
-@mixin border-fn($cc) {
-  border: 5px solid $cc;
-}
+<SlideDiv>슬라이드</SlideDiv>;
 ```
 
-```scss
-@import "val";
-@import "mixins";
-.wrap {
+#### 2.3.2. props용
+
+```js
+const PopupTitle = styled.h1`
+  color: hotpink;
+  font-size: ${props => props.size}px;
+  text-align: center;
+`;
+
+<PopupTitle style={TitleStyle} size={8}>
+  {title}
+</PopupTitle>;
+```
+
+#### 2.3.3. props 기본값 적용한 경우를 추천합니다
+
+```js
+const BannerDiv = styled.div`
   position: relative;
-  @include flex-center;
-  width: $width-screen;
-  .notice {
-    @include flex-center;
-    width: $pc-screen;
-    ul {
-      li {
-        @include flex-center;
-        @include border-fn(red);
-        background-color: $color-bg;
-        &:hover {
-          background-color: pink;
-        }
-      }
-    }
-  }
-  .slide {
-    @include flex-center;
-    width: $mb-screen;
-  }
-  .banner {
-    @include flex-center;
-    width: $mb-screen;
-  }
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${props => props.www || 100}px;
+  height: ${props => props.hhh || 100}px;
+  background-color: ${props => props.bg || "red"};
+`;
 ```
 
-#### 2.4.7. module.scss 만들기
-
-- `header.module.scss` 파일 생성
+```js
+<BannerDiv bg={"yellow"} www={200} hhh={200}>
+  배너
+</BannerDiv>
+<BannerDiv bg={"orange"} www={50} hhh={50}>
+  배너2
+</BannerDiv>
+<BannerDiv>배너3</BannerDiv>
+```
