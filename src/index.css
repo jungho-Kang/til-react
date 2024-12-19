@@ -29,7 +29,7 @@ html {
   font-size: 16px;
 }
 body {
-  font-family: "bbb";
+  font-family: "aaa";
   font-size: var(--font-size-base);
   color: var(--primary-color);
 }
