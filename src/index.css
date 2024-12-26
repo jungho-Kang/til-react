@@ -1,12 +1,12 @@
 /* 글꼴 설정 */
-@font-face {
+/* @font-face {
   font-family: "aaa";
   src: url("/chab.ttf");
 }
 @font-face {
   font-family: "bbb";
   src: url("/ddag.ttf");
-}
+} */
 :root {
   --primary-color: #000000;
   --secondary-color: #0000ff;
