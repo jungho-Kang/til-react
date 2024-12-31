@@ -1,10 +1,13 @@
-import Counter from "./components/counter/Counter";
+import TodoAdd from "./components/todo/TodoAdd";
+import TodoList from "./components/todo/TodoList";
+import { TodoProvider } from "./contexts/todoProvider";
 
 function App() {
   return (
-    <div>
-      <Counter />
-    </div>
+    <TodoProvider>
+      <TodoAdd />
+      <TodoList />
+    </TodoProvider>
   );
 }
 export default App;
